@@ -1,4 +1,5 @@
 ﻿var net = require('net');
+var app = require('./lib/app.js');
 
 /// 获取可用端口
 var baseport = 3000;
@@ -9,7 +10,7 @@ var ports = [];
         server.once('close', function () {
             ports.push(port);
             if (ports.length >= 2) {
-                require('./lib/app.js')(ports);
+                app(ports);
             } else {
                 getPort(port + 1);
             }

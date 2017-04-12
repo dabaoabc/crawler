@@ -1,62 +1,101 @@
 ﻿var fs = require('fs');
 var _path = require('path');
+var express = require('express');
+var router = express.Router();
+var site_config = require('../model/site_config.js'); 
+var mongoose = require('mongoose');
 
-exports.route = function () {
-    /// 添加配置
-    routes.post('/config/add', function (req, res) {
-        var self = this;
-        var selector = [];
-        JSON.parse(req.post.levels).forEach(function (element, index) {
-            selector.push({
-                $: element.selector,
-                attr: element.attr
-            });
-        });
-        req.post.selector = selector;
-        var filename = ROOT + 'config/' + req.post.configName.trim();
-        req.post.isPagination = !!req.post.page?1:0;
-        req.post.mode = 'web';
-        delete req.post.page;
-        delete req.post.configName;
-        delete req.post.levels;
-        fs.writeFile(filename, JSON.stringify(req.post), function (err) {
-            self.json({
-                status: !err,
-                info: !err ? '保存成功':'保存失败',
-                error: err
-            });
+/// 添加配置
+router.post('/add', function (req, res) {
+    var self = this;
+    var selector = [];
+    JSON.parse(req.body.levels).forEach(function (element, index) {
+        selector.push({
+            $: element.selector,
+            attr: element.attr
         });
     });
-    
-    /// 删除配置
-    routes.get('/config/delete', function (req, res) {
-        var self = this;
-        fs.unlink(ROOT + 'config/' + req.get.name, function (err) {
-            self.json({
-                status: !err,
-                info: !err?'删除成功':'删除失败',
-                error: err
-            });
-        });
-    });
-    
-    /// 获取配置内容
-    routes.get('/config/edit', function (req, res) {
-        var self = this;
-        var filename = _path.join(ROOT, 'config', req.get.name);
-        fs.readFile(filename, { encoding: 'utf8' }, function (err, data) {
+    req.body.selector = selector;
+    // var filename = ROOT + 'config/' + req.body.configName.trim();
+    req.body.isPagination = !!req.body.page?1:0;
+    req.body.mode = 'web';
+    var id = req.body.id || '';
+    if (!req.body.id) {
+        req.body.id = 'testid';
+        site_config.create({
+            configName: req.body.configName,
+            configJson: JSON.stringify(req.body)
+        }, function(err, data){
             if (err) {
-                self.json({
+                res.json({
                     status: false,
-                    info: '该配置文件不存在'
+                    info: '保存失败',
+                    data: err
                 });
-            } else {
-                var data = utils.switchAttr(JSON.parse(data), 'isPagination page,selector levels,selector.[].$ selector');
-                self.json({
+            }else{
+                res.json({
                     status: true,
-                    data: utils.extend(data, { configName: req.get.name })
+                    info: '保存成功',
+                    data: data
                 });
-            }
+            }  
+        });
+    }else{
+        site_config.update({
+            _id: id
+        },{
+            configName: req.body.configName,
+            configJson: JSON.stringify(req.body)
+        },function(err, data){
+            console.log('err',err);
+            res.json({
+                status: !err,
+                info: !err ? '更新成功':'更新失败',
+                error: err
+            });
+        });
+    }
+});
+
+/// 删除配置
+router.get('/delete', function (req, res) {
+    // var self = this;
+    var id = req.query.id;
+    site_config.remove({
+        _id: id
+    }, function(err, result){
+        res.json({
+            status: !err,
+            info: !err?'删除成功':'删除失败',
+            error: err
         });
     });
-}
+});
+
+/// 获取配置内容
+router.get('/edit', function (req, res) {
+    // var self = this;
+    var id = req.query.id;
+    site_config.find({
+        _id: id
+    }, function(err, result){
+        if (err) {
+            res.json({
+                status: false,
+                info: '该配置文件不存在'
+            });
+        }else{
+            var resultjson = JSON.parse(result[0].configJson);
+            resultjson.id = id;
+            var data = utils.switchAttr(resultjson, 'isPagination page,selector levels,selector.[].$ selector');
+            res.json({
+                status: true,
+                data: utils.extend(data, { configName: req.query.name, id: req.query.id})
+            });
+        }
+
+    })
+});
+
+
+module.exports = router;

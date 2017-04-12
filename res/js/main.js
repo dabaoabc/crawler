@@ -41,6 +41,7 @@ exec.modal = function (_data) {
             var self = this;
             var data = _data || {};
             this.viewmodel = {
+                id: ko.observable(data.id),
                 configName: ko.observable(data.configName),
                 url: ko.observable(data.url),
                 type: ko.observable(data.type),
@@ -103,13 +104,15 @@ exec.modal = function (_data) {
                             success: function (json) {
                                 if (json.status) {
                                     var configname = $.trim(data.configName);
+                                    var id = json.data.id;
                                     dd.close().remove();
                                     if (_data) {
                                         var cc = self.children();
                                         cc.first().text(configname);
                                         cc.last().attr("data-name", configname);
+                                        cc.last().attr("data-id", id);
                                     } else {
-                                        $('#ConfigList').prepend('<li><span>' + configname + '</span><div class="nc-item-btns" data-name="' + configname + '"><button class="am-btn am-btn-xs am-btn-success" tag="start">爬取</button><button class="am-btn am-btn-xs am-btn-primary" tag="edit">修改</button><button class="am-btn am-btn-xs am-btn-warning" tag="delete">删除</button></div></li>');
+                                        $('#ConfigList').prepend('<li><span>' + configname + '</span><div class="nc-item-btns" data-id="'+id+'" data-name="' + configname + '"><button class="am-btn am-btn-xs am-btn-success" tag="start">爬取</button><button class="am-btn am-btn-xs am-btn-primary" tag="edit">修改</button><button class="am-btn am-btn-xs am-btn-warning" tag="delete">删除</button></div></li>');
                                     }
                                 } else {
                                     self.statusbar('<span class="am-text-danger">' + json.info + '</span>');
@@ -142,7 +145,10 @@ exec.remove = function () {
             $.ajax({
                 url: '/config/delete',
                 cache: false,
-                data: { name: self.parent().data('name') },
+                data: { 
+                    name: self.parent().data('name'),
+                    id: self.parent().data("id")
+                 },
                 success: function (json) {
                     json.status && self.parents("li").remove();
                     dialog({
@@ -162,7 +168,10 @@ exec.edit = function () {
     var self = $(this);
     $.ajax({
         url: '/config/edit',
-        data: { name: self.parent().data("name") },
+        data: {
+            name: self.parent().data("name"),
+            id: self.parent().data("id")
+        },
         cache: false,
         success: function (json) {
             if (json.status) {
@@ -254,7 +263,7 @@ function validation(model) {
                     }
                 }
             } else {
-                if ($.trim(model[i]) === '') {
+                if ($.trim(model[i]) === '' && i!=='id') {
                     return mapping[i] + '不能为空';
                 }
             }

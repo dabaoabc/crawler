@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -61,7 +61,7 @@
                 </ol>
                 <ul class="am-list am-list-static" id="ConfigList">
                     <% list.forEach(function(element,index){ %>
-                    <li><span><%=element%></span><div class="nc-item-btns" data-name="<%=element%>"><button class="am-btn am-btn-xs am-btn-success" tag="start">爬取</button><button class="am-btn am-btn-xs am-btn-primary" tag="edit">修改</button><button class="am-btn am-btn-xs am-btn-warning" tag="remove">删除</button></div></li>
+                    <li><span><%=element.configName%></span><div class="nc-item-btns" data-name="<%=element.configName%>" data-id="<%=element._id%>"><button class="am-btn am-btn-xs am-btn-success" tag="start">爬取</button><button class="am-btn am-btn-xs am-btn-primary" tag="edit">修改</button><button class="am-btn am-btn-xs am-btn-warning" tag="remove">删除</button></div></li>
                     <% }) %>
                 </ul>
                 <div><button class="am-btn am-btn-primary" id="AddBtn">新增配置</button></div>
@@ -77,9 +77,12 @@
     </footer>
 
     <script type="text/html" id="AddTpl">
+        <div class="am-input-group am-input-group-sm margin-tb-5 site_id">
+            <span class="am-input-group-label" data-bind="text:id">id</span>
+        </div>
         <div class="am-input-group am-input-group-sm margin-tb-5">
             <span class="am-input-group-label">配置名称</span>
-            <input type="text" class="am-form-field" data-bind="textinput:configName" data-tip="给你的配置去个名字">
+            <input type="text" class="am-form-field" data-bind="textinput:configName">
         </div>
         <div class="am-input-group am-input-group-sm margin-tb-5">
             <span class="am-input-group-label">页面URL</span>
