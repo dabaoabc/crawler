@@ -13,7 +13,8 @@ router.get('/', function(req, res, next) {
         if (data) {
         	res.render('index', {
 				list: data,
-		        wsport: PORTS[1]
+		        wsport: PORTS[1],
+		        item: "爬虫管理"
 			});
         }
     });

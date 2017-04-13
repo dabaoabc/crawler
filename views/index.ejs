@@ -1,64 +1,20 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>node-crawler</title>
-    <script src="/js/jquery-1.11.1.min.js"></script>
-    <link href="../css/amazeui.min.css" rel="stylesheet" />
-    <link href="../css/ui-dialog.css" rel="stylesheet" />
-    <script src="../js/dialog-plus-min.js"></script>
-    <script src="../js/knockout-3.3.0.debug.js"></script>
-    <link href="/css/style.css" rel="stylesheet" type="text/css" />
     <script>
         var port = '<%=wsport%>';
     </script>
-    <script src="../js/main.js"></script>
-    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
+    <% include _head %>
+
 </head>
 <body>
-    <div class="wrap transition" id="Wrap">
-        <div class="nc-header">
-            <div class="am-g">
-                <div class="am-u-sm-1 am-u-sm-offset-2 title">
-                    spider
-                </div>
-                <div class="am-u-sm-8">
-                    <nav data-am-widget="menu" class="list-menu am-menu am-menu-dropdown2" data-am-menu-collapse> 
-                        <a href="javascript: void(0)" class="am-menu-toggle">
-                              <i class="am-menu-toggle-icon am-icon-bars"></i>
-                        </a>
-                        <ul class="am-menu-nav am-avg-sm-4 list-ul am-collapse">
-                              <li class="">
-                                <a href="/" class="" >爬虫任务</a>
-                              </li>
-                              <li class="">
-                                <a href="/tag" class="" >tag管理</a>
-                              </li>
-                              <li class="">
-                                <a href="/hot" class="" >热点类别管理</a>
-                              </li>
-                              <li class="">
-                                <a href="/news" class="" >新闻标注</a>
-                              </li>
-                              <li class="">
-                                <a href="/user" class="" >用户管理</a>
-                              </li>
-                              <li class="">
-                                <a href="/list" class="" >分类标记任务</a>
-                              </li>
-                        </ul>
-                    </nav>
-                </div>          
-            </div>
-        </div>
+    <div class="wrap transition am-container" id="Wrap">
+        <% include _nav %>
         <section class="list-config am-g">
-            <div class="am-u-sm-8 am-u-sm-centered">
+            <div class="am-u-sm-11 am-u-md-8 am-u-sm-centered">
                 <!-- <h4>已有配置：</h4> -->
-                <ol class="am-breadcrumb">
-                  <li><a href="#" class="am-icon-home">首页</a></li>
-                  <li class="am-active">爬虫任务</li>
-                </ol>
+                <% include _breadcrumb %>
                 <ul class="am-list am-list-static" id="ConfigList">
                     <% list.forEach(function(element,index){ %>
                     <li><span><%=element.configName%></span><div class="nc-item-btns" data-name="<%=element.configName%>" data-id="<%=element._id%>"><button class="am-btn am-btn-xs am-btn-success" tag="start">爬取</button><button class="am-btn am-btn-xs am-btn-primary" tag="edit">修改</button><button class="am-btn am-btn-xs am-btn-warning" tag="remove">删除</button></div></li>
@@ -67,7 +23,6 @@
                 <div><button class="am-btn am-btn-primary" id="AddBtn">新增配置</button></div>
             </div>
         </section>
-
     </div>
 
     <ul id="LogList" class="am-list log-list"></ul>
@@ -124,10 +79,6 @@
             <input type="text" class="am-form-field" placeholder="默认utf8" data-bind="textinput:charset" data-tip="具体需参考网站的meta中charset参数，常用值：utf8、gbk、gb2312">
         </div>
         <div class="am-input-group am-input-group-sm margin-tb-5">
-            <span class="am-input-group-label">存储路径</span>
-            <input type="text" class="am-form-field" data-bind="textinput:saveDir" data-tip="图片或文本存储的路径，请使用绝对路径，如：D:\download">
-        </div>
-        <div class="am-input-group am-input-group-sm margin-tb-5">
             <span class="am-input-group-label">图片地址处理</span>
             <input type="text" class="am-form-field"  placeholder="此项可不填" data-bind="textinput:imageFn" data-tip="对抓取到的图片地址进行二次处理，如：<br>抓取到的图片地址为http://xxx.com/small/123.jpg，<br>此地址为小图，而大图的地址为http://xxx.com/big/123.jpg，<br>此时可设置参数为：function(url){return url.replace('small', 'big');}">
         </div>
@@ -156,6 +107,5 @@
             </li>
         </ul>
     </script>
-
 </body>
 </html>

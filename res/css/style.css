@@ -60,6 +60,12 @@ body {
     padding: 10px 0;
     font-size: 16px;
 }
+.am-container{
+    width: 100% !important;
+    max-width: none;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
 .nc-header .title{
     height: 54px;
     line-height: 54px;
@@ -86,7 +92,12 @@ body {
 .list-config .am-list li:hover {
     background-color: #eeeeee;
 }
-
+.ol-title{
+    margin-bottom: 0;
+}
+.list_new_padding{
+    padding: 0;
+}
 .nc-item-btns {
     position: absolute;
     right: 5px;

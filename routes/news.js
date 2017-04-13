@@ -21,7 +21,8 @@ router.get('/', function (req, res) {
     		})
     		res.render('new_list', {
 	            item: "新闻标注",
-	            list_new: list_new
+	            list_new: list_new,
+                item: "站点列表"
 	        });
     	}
     })
@@ -35,7 +36,8 @@ router.get('/:id', function (req, res) {
     	if (result) {
     		res.render('article_content', {
                 item: "新闻标注",
-	            content: result
+	            content: result,
+                item: "文章详情"
 	        });
     	}
     })

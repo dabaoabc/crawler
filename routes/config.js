@@ -47,12 +47,19 @@ router.post('/add', function (req, res) {
             configName: req.body.configName,
             configJson: JSON.stringify(req.body)
         },function(err, data){
-            console.log('err',err);
-            res.json({
-                status: !err,
-                info: !err ? '更新成功':'更新失败',
-                error: err
-            });
+            if (err) {
+                res.json({
+                    status: false,
+                    info: '更新失败',
+                    data: err
+                });
+            }else{
+                res.json({
+                    status: true,
+                    info: '更新成功',
+                    data: data
+                });
+            }  
         });
     }
 });

@@ -49,7 +49,6 @@ exec.modal = function (_data) {
                 from: ko.observable(data.from || 1),
                 to: ko.observable(data.to || 1),
                 charset: ko.observable(data.charset),
-                saveDir: ko.observable(data.saveDir),
                 imageFn: ko.observable(data.imageFn),
                 levels: ko.observableArray(data.levels),
                 remove: function (index) {
@@ -201,19 +200,24 @@ exec.stop = function () {
 /// 执行爬虫
 exec.start = function () {
     var configname = $(this).parent().data('name');
+    var configid = $(this).parent().data('id');
     var wrap = $('#Wrap');
     var loglist = $('#LogList');
     var fb = $('#FooterBar');
     var btn = fb.children('a');
     wrap.addClass('wrap-go');
     btn.children('b').text(configname);
+
     fb.addClass('footer-bar-active');
     setTimeout(function () {
         loglist.show();
         /// 执行ws
         ws.send(JSON.stringify({
             action: 'start',
-            config: configname
+            config: {
+                configname: configname,
+                configid: configid
+            }
         }));
     }, 600);
     btn.one("click", function () {

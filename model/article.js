@@ -6,7 +6,9 @@ var autoIncrement = require('mongoose-auto-increment');
 var db = require('../utils/db.js');
 
 var ArticleSchema = mongoose.Schema({
-    title: {type: String, unique: true},
+	site_name: {type: String},
+    title: {type: String},
+    site_url: {type: String, unique: true},
     content: {type: String},
     c_time: {type: Date, default:new Date()}
 });
