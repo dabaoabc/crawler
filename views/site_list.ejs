@@ -23,10 +23,9 @@
 				    </div>
 				  	<div class="am-list-news-bd">
 					  	<ul class="am-list">	
-					  		<% for(var i=0; i < list_new.length; i++){ %>
+					  		<% for(var i=0; i < site_name.length; i++){ %>
 					      	<li class="am-g am-list-item-dated">
-					            <a href="site/<%= list_new[i]._id %>" class="am-list-item-hd "><%= list_new[i].title %></a>
-					            <span class="am-list-date"><%= list_new[i].c_time %></span>
+					            <a href="news/<%= site_name[i] %>" class="am-list-item-hd "><%= site_name[i] %></a>
 					      	</li>
 					      	<%}%>
 					  	</ul>

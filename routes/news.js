@@ -6,36 +6,50 @@ var moment = require('moment');
 var mongoose = require('mongoose');
 
 
-router.get('/', function (req, res) {
-    var configsName = filelist(ROOT + 'config');
+Array.prototype.unique = function(){
+    this.sort(); //先排序
+    var res = [this[0]];
+    for(var i = 1; i < this.length; i++){
+        if(this[i] !== res[res.length - 1]){
+           res.push(this[i]);
+        }
+    }
+    return res;
+}
+router.get('/:site', function (req, res) {
+    // var configsName = filelist(ROOT + 'config');
+    var site = req.params.site;
     var that = this;
     var list_new = [];
-    article.find({}, function(err, result){
+    var site_name = [];
+    article.find({
+        site_name: site
+    }, function(err, result){
     	if (result) {
     		result.forEach(function(e){
+                site_name.push(e.site_name);
     			list_new.push({
     				title: e.title,
     				c_time: moment(e.c_time).format('L'),
     				_id: e._id
     			});
     		})
+            // console.log(site_name.unique());
     		res.render('new_list', {
-	            item: "新闻标注",
 	            list_new: list_new,
-                item: "站点列表"
+                item: "内容列表"
 	        });
     	}
     })
-    
 });
-router.get('/:id', function (req, res) {
-    var configsName = filelist(ROOT + 'config');
+
+router.get('/site/:id', function (req, res) {
+    // var configsName = filelist(ROOT + 'config');
     var _id = mongoose.Types.ObjectId(req.params.id);
     var that = this;
     article.findOne({_id: _id}, function(err, result){
     	if (result) {
     		res.render('article_content', {
-                item: "新闻标注",
 	            content: result,
                 item: "文章详情"
 	        });
@@ -43,5 +57,6 @@ router.get('/:id', function (req, res) {
     })
     
 });
+
 
 module.exports = router;
