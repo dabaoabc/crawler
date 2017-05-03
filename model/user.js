@@ -4,11 +4,11 @@
 var mongoose = require('mongoose')
 
 var UserSchema = mongoose.Schema({
-	user_id: {type: Number},
     user_name: {type: String},
-    passport: {type: String},
-    email: {type: String},
-    phone: {type: Number}
+    email: {type: String, unique: true},
+    password: {type: String},
+    phone: {type: String},
+    qq: {type: String}
 });
 
 var User = mongoose.model('newusers', UserSchema)

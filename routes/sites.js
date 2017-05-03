@@ -20,6 +20,7 @@ router.get('/', function (req, res) {
     // var configsName = filelist(ROOT + 'config');
     var that = this;
     var site_name = [];
+    var username = req.session.username;
     article.find({}, function(err, result){
     	if (result) {
     		result.forEach(function(e){
@@ -27,7 +28,8 @@ router.get('/', function (req, res) {
     		})
     		res.render('site_list', {
 	            site_name: site_name.unique(),
-                item: "站点列表"
+                item: "站点列表",
+                username: username
 	        });
     	}
     })

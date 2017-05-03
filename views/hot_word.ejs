@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include _head %>
+    <script src="../js/hot_word.js"></script>
+</head>
+<body>
+    <div class="wrap transition am-container" id="Wrap">
+        <% include _nav %>
+        <section class="list-config am-g">
+            <div class="am-u-md-3 am-u-sm-centered">
+            <% include _breadcrumb %>
+                <table class="am-table am-table-bordered am-table-radius am-table-striped am-table-hover am-text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>类别</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% list.forEach(function(element,index){ %>
+                        <tr>
+                            <td class="list_word"><%=element.hot_word%></td>
+                            <td><a href="javascript:void(0)" class="remove_word">删除</a></td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+                <!-- <button type="button" class="am-btn am-btn-primary am-radius">添加用户</button> -->
+                <div class="am-g">
+                  <div class="am-u-md-8 am-u-sm-centered">
+                    <form class="am-form">
+                      <fieldset class="am-form-set">
+                        <input type="text" placeholder="热点词" name="hot_word">
+                      </fieldset>
+                      <button type="submit" class="am-btn am-btn-primary am-btn-block add-user">添加词汇</button>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <% include _footer %>
+<script>
+$(function(){
+    $('.hot_word').addClass("am-active").siblings('li').removeClass("am-active");
+})
+</script>
+</body>
+</html>

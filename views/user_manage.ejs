@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include _head %>
+    <script src="../js/user_manage.js"></script>
+</head>
+<body>
+    <div class="wrap transition am-container" id="Wrap">
+        <% include _nav %>
+
+        <section class="list-config am-g">
+            <div class="am-u-sm-11 am-u-md-8 am-u-sm-centered">
+            <% include _breadcrumb %>
+                <table class="am-table am-table-bordered am-table-radius am-table-striped am-table-hover am-text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>email</th>
+                            <th>phone</th>
+                            <th>密码</th>
+                            <th>QQ</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% list.forEach(function(element,index){ %>
+                        <tr>
+                            <td><%=element.user_name%></td>
+                            <td class="emailelem"><%=element.email%></td>
+                            <td><%=element.phone%></td>
+                            <td><%=element.password%></td>
+                            <td><%=element.qq%></td>
+                            <td><a href="javascript:void(0)" class="remove_user">删除</a></td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+                <!-- <button type="button" class="am-btn am-btn-primary am-radius">添加用户</button> -->
+                <div class="am-g">
+                  <div class="am-u-md-8 am-u-sm-centered">
+                    <form class="am-form">
+                      <fieldset class="am-form-set">
+                        <input type="text" placeholder="取个名字" name="user_name">
+                        <input type="email" placeholder="填下邮箱" name="email">
+                        <input type="text" placeholder="留个电话" name="phone">
+                        <input type="text" placeholder="密码" name="password">
+                        <input type="text" placeholder="留个QQ" name="qq">
+                      </fieldset>
+                      <button type="submit" class="am-btn am-btn-primary am-btn-block add-user">添加用户</button>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <% include _footer %>
+<script>
+$(function(){
+    $('.user_manage').addClass("am-active").siblings('li').removeClass("am-active");
+})
+</script>
+</body>
+</html>

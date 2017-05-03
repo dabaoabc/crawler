@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <% include _head %>
+    <script src="../js/d3.min.js"></script>
+    <script src="../js/d3.layout.cloud.js"></script>
+    
+</head>
+<body>
+	<div class="wrap transition" id="Wrap">
+        <% include _nav %>
+        <section class="list-config am-g">
+            <div class="am-u-sm-12 am-u-md-8 am-u-sm-centered">
+                <!-- <h4>已有配置：</h4> -->
+                <ol class="am-breadcrumb ol-title am-u-md-7">
+				  	<li><a href="/" class="am-icon-home">首页</a></li>
+				  	<li class="am-active"><%=item%></li>
+				</ol>
+                <span>
+                    <select id="js-selected" placeholder="点击选择" data-am-selected="{btnWidth: '40%', btnSize: 'sm', btnStyle: 'secondary',searchBox: 1}" >
+                        <option selected value=""></option>
+                        <% list.forEach(function(element,index){ %>
+                            <option value="<%=element.hot_word%>"><%=element.hot_word%></option>
+                        <% }) %>
+                    </select>
+                </span>
+                <div class="font_cloud">
+                    
+                </div>
+          	</div>
+            
+        </section>
+    </div>
+    <% include _footer %>
+<script>
+    $(function(){
+        $('.analysis').addClass("am-active").siblings('li').removeClass("am-active");
+    })
+</script>
+<script src="../js/D3.js"></script>     
+</div>
+</body>
+</html>

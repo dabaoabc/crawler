@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <% include _head %>
+    <link rel="stylesheet" href="../css/other.min.css" />
+</head>
+<body class="login-container">
+  <div class="login-box">
+    <div class="logo-img">
+      <img src="../images/logo2_01.png" alt="" />
+    </div>
+    <form action="/login" method="post" class="am-form" data-am-validator>
+      
+
+      <div class="am-form-group">
+        <label for="doc-vld-email-2"><i class="am-icon-user"></i></label>
+        <input type="email" id="doc-vld-email-2" placeholder="输入邮箱" name="email" required/>
+      </div>
+      <div class="am-form-group">
+        <label for="doc-vld-name-2"><i class="am-icon-key"></i></label>
+        <input type="password" id="doc-vld-name-2" minlength="3" placeholder="输入密码" name="password" required/>
+      </div>
+      <button class="am-btn am-btn-secondary"  type="submit">登录</button>
+    </form>
+  </div>
+</body>
+</html>
+
