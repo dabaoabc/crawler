@@ -36,7 +36,6 @@ addEvent.append = function(data){
                 "<td>"+data.user_name+"</td>"+
                 "<td>"+data.email+"</td>"+
                 "<td>"+data.phone+"</td>"+
-                "<td>"+data.password+"</td>"+
                 "<td>"+data.qq+"</td>"+
                 "<td><a href='javascript:void(0)' class='remove_user'>删除</a></td>"+
             "</tr>");
